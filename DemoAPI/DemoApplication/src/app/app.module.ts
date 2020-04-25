@@ -7,6 +7,9 @@ import { LoginComponent } from './login/login.component';
 import { FullComponent } from './layouts/full/full.component';
 import { HeaderComponent } from './layouts/full/header/header.component';
 import { SidebarComponent } from './layouts/full/sidebar/sidebar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DemoMaterialModule } from './demo-material-module';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -14,11 +17,14 @@ import { SidebarComponent } from './layouts/full/sidebar/sidebar.component';
     LoginComponent,
     FullComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    DemoMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

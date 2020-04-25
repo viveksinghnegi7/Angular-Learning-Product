@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="DemoApplication\src\app\layouts\" />
+    <Folder Include="DemoApplication\src\app\shared\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
