@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { SharedModule } from "./shared/shared.module";
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SharedModule } from "./shared/shared.module";
     AppRoutingModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
-    SharedModule
+    SharedModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
