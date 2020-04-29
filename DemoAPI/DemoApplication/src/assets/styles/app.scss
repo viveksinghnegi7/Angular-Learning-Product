@@ -26,18 +26,20 @@ Global Styles
 }
 
 body {
-    font-family: $bodyfont;
-    margin: 0;
-    overflow-x: hidden;
-    color: $bodytext;
-    font-weight: 300;
-    background: $inverse;
+  font-family: $bodyfont;
+  margin: 0;
+  overflow-x: hidden;
+  color: $bodytext;
+  font-weight: 300;
+  background: $inverse;
+  height: 100% !important;
 }
 
 html {
-    position: relative;
-    min-height: 100%;
-    background: $white;
+  position: relative;
+  min-height: 100%;
+  background: $white;
+  height: 100% !important;
 }
 a:hover, a:focus, a{
     text-decoration: none;

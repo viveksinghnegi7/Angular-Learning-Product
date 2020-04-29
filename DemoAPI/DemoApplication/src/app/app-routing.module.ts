@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FullComponent } from './layouts/full/full.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
     {
-      path: '',
-      component: FullComponent,
+    path: '',
+    component: LoginComponent,
       children: [
         {
           path: '',
