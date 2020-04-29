@@ -10,6 +10,8 @@ import { SidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { SharedModule } from "./shared/shared.module";
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DemoMaterialModule
+    DemoMaterialModule,
+    SharedModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
