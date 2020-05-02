@@ -1,13 +1,19 @@
 using System;
+using Demo.Business.Concrete;
+using Demo.Business.Contract;
+using Demo.Repos.Concrete;
+using Demo.Repos.Contract;
+using Demo.Repos.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DemoAPI
+namespace Demo.API
 {
     public class Startup
     {
@@ -21,6 +27,16 @@ namespace DemoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<DemoContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+            {
+                builder
+                    .WithOrigins(new[] { "http://localhost:4200/" })
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            }));
             services.AddRazorPages();
             services.AddControllers()
                 .ConfigureApiBehaviorOptions(options =>
@@ -32,6 +48,9 @@ namespace DemoAPI
                     options.ClientErrorMapping[404].Link =
                         "https://httpstatuses.com/404";
                 });
+            services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
             //services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -53,7 +72,7 @@ namespace DemoAPI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -78,8 +97,8 @@ namespace DemoAPI
                 spa.Options.SourcePath = "DemoApplication";
 
                 if (env.IsDevelopment())
-                {
-                    spa.Options.StartupTimeout = TimeSpan.FromSeconds(200); 
+                { 
+                    spa.Options.StartupTimeout = new TimeSpan(0, 5, 0);
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
