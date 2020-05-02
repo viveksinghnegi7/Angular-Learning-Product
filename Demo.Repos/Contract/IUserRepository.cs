@@ -8,10 +8,10 @@ namespace Demo.Repos.Contract
 {
     public interface IUserRepository //: IGenericRepository<User>
     {
-        Task<IEnumerable<Users>> GetAllUsers();
-        Task<Users> GetById(int id);
+        Task<IEnumerable<User>> GetAllUsers();
+        Task<User> GetById(int id);
 
-        Task<Users> CreateUsers(Users user);
+        Task<User> CreateUsers(User user);
 
     }
 }
