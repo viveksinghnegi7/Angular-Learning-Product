@@ -8,9 +8,10 @@ namespace Demo.Business.Contract
 {
    public interface IUserManager
     {
-        Task<IEnumerable<Users>> GetAll();
-        Task<Users> GetById(int id); 
-        Task<Users> CreateUserRecord(Users userDetails);
+        User Authenticate(string username, string password);
+        Task<IEnumerable<User>> GetAll();
+        Task<User> GetById(int id); 
+        Task<User> CreateUserRecord(User userDetails);
 
     }
 }

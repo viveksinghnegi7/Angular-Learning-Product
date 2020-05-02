@@ -7,7 +7,7 @@ using Demo.Repos.Models;
 
 namespace Demo.Repos.Concrete
 {
-    public class UserRepository : GenericRepository<Users, DemoContext>, IUserRepository
+    public class UserRepository : GenericRepository<User, DemoContext>, IUserRepository
     {
         DemoContext _demoContext;
         public UserRepository(DemoContext demoContext) : base(demoContext)
@@ -15,18 +15,18 @@ namespace Demo.Repos.Concrete
             _demoContext = demoContext;
         }
 
-        public async Task<Users> CreateUsers(Users user)
+        public async Task<User> CreateUsers(User user)
         {
             return await base.Add(user); 
         }
 
 
-        async Task<IEnumerable<Users>> IUserRepository.GetAllUsers()
+        async Task<IEnumerable<User>> IUserRepository.GetAllUsers()
         {
             return await base.GetAll(); 
         }
 
-        async Task<Users> IUserRepository.GetById(int id)
+        async Task<User> IUserRepository.GetById(int id)
         {
             return await base.Get(id); 
         }

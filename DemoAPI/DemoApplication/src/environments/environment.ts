@@ -5,7 +5,7 @@
 export const environment = {
   production: false
 };
-
+export const baseUrl = "https://localhost:44355/controller/";
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

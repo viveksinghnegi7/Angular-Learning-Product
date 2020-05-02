@@ -26,10 +26,14 @@ export class LoginComponent implements OnInit {
     if (this.formGroup.valid) {
       this.authService.login(this.formGroup.value).subscribe(result => {
         if (result.success) {
-          console.log(result.message);
-          alert(result.message);
+          var a = result.deserialize;
+          console.log(a);
+          console.log("Login Successful");
+
         } else {
-          alert(result.message); 
+          var b = result.deserialize();
+          console.log(b);
+          console.log("Login Not Successful");
         }
       });
     }
