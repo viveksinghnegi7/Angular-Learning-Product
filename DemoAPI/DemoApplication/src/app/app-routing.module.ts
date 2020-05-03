@@ -26,7 +26,9 @@ const routes: Routes = [
         //}
       ]
   },
-  { path: 'account', loadChildren: accountModule }
+    { path: 'account', loadChildren: accountModule },
+    // otherwise redirect to home
+    { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
