@@ -4,10 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AccountRoutingModule } from './account-routing.module';
 import { LoginComponent } from "./login.component";
-import { DemoMaterialModule } from "../demo-material-module";@NgModule({
+import { DemoMaterialModule } from "../demo-material-module";
+import { FlexLayoutModule } from '@angular/flex-layout';
+@NgModule({
   declarations: [LoginComponent],
   imports: [
-    CommonModule, DemoMaterialModule, FormsModule, ReactiveFormsModule,
+    CommonModule, DemoMaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,
     AccountRoutingModule
   ]
 })
