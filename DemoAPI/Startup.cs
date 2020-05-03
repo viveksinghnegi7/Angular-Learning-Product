@@ -32,14 +32,7 @@ namespace Demo.API
         {
 
             services.AddDbContext<DemoContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
-            {
-                builder
-                    .WithOrigins(new[] { "http://localhost:4200/" })
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
-            }));
+            services.AddCors();
             services.AddRazorPages();
             services.AddControllers()
                 .ConfigureApiBehaviorOptions(options =>
@@ -98,8 +91,7 @@ namespace Demo.API
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
-            app.UseCors("CorsPolicy");
+            } 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -107,7 +99,12 @@ namespace Demo.API
                 app.UseSpaStaticFiles();
             }
 
-            app.UseRouting();   
+            app.UseRouting();
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

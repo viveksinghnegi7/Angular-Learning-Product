@@ -20,7 +20,7 @@ namespace Demo.API.Controllers
         }
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateModel model)
+        public IActionResult Authenticate([FromBody]AuthenticateUser model)
         {
             _logger.LogInformation("Authenticate Called");
             var user = _userManager.Authenticate(model.Email, model.Password);

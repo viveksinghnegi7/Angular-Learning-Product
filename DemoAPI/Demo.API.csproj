@@ -25,11 +25,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="DemoApplication\src\app\helpers\auth.gaurd.ts" />
+    <None Remove="DemoApplication\src\app\helpers\error.interceptor.ts" />
+    <None Remove="DemoApplication\src\app\helpers\jwt.interceptor.ts" />
+    <None Remove="DemoApplication\src\app\services\AuthenticateUser.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DemoApplication\src\app\layouts\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Demo.Business\Demo.Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="DemoApplication\src\app\helpers\auth.gaurd.ts" />
+    <TypeScriptCompile Include="DemoApplication\src\app\helpers\error.interceptor.ts" />
+    <TypeScriptCompile Include="DemoApplication\src\app\helpers\jwt.interceptor.ts" />
+    <TypeScriptCompile Include="DemoApplication\src\app\models\AuthenticateUser.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

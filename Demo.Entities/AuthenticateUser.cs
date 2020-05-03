@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Demo.Entities
 {
-    public class AuthenticateModel
+    public class AuthenticateUser
     {
         [Required]
         public string Email { get; set; }
