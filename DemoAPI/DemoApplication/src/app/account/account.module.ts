@@ -6,8 +6,9 @@ import { AccountRoutingModule } from './account-routing.module';
 import { LoginComponent } from "./login.component";
 import { DemoMaterialModule } from "../demo-material-module";
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { RegisterComponent } from './register/register.component';
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, RegisterComponent],
   imports: [
     CommonModule, DemoMaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,
     AccountRoutingModule
