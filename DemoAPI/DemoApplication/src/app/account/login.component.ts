@@ -13,7 +13,15 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   submitted = false;
   constructor(private route: ActivatedRoute,
-    private router: Router,private authService:AuthServiceService) { }
+    private router: Router,
+    private authService: AuthServiceService) {
+
+    // redirect to home if already logged in
+    if (this.authService.userValue) {
+      this.router.navigate(['/']);
+    }
+
+  }
 
   ngOnInit(): void {
     this.initForm();

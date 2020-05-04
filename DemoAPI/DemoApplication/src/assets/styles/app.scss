@@ -33,14 +33,16 @@ body {
   font-weight: 300;
   background: $inverse;
   height: 100% !important;
+  min-height: 100% !important;
 }
 
 html {
   position: relative;
-  min-height: 100%;
-  background: $white;
   height: 100% !important;
-}
+  min-height: 100% !important;
+  margin: 0;
+  //background: $white; 
+} 
 a:hover, a:focus, a{
     text-decoration: none;
 }
