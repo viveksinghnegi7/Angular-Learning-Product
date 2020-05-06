@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Demo.Entities\Demo.Entities.csproj" />
+    <ProjectReference Include="..\Demo.Utilities\Demo.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

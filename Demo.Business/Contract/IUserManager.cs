@@ -8,10 +8,10 @@ namespace Demo.Business.Contract
 {
    public interface IUserManager
     {
-        User Authenticate(string username, string password);
+        Task<User> Authenticate(string username, string password);
+        Task<User> RegisterUser(User user, string password);
         Task<IEnumerable<User>> GetAll();
-        Task<User> GetById(int id); 
-        Task<User> CreateUserRecord(User userDetails);
+        Task<User> GetById(int id);  
 
     }
 }

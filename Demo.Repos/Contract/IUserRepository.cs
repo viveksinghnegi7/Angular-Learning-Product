@@ -10,8 +10,8 @@ namespace Demo.Repos.Contract
     {
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> GetById(int id);
-
-        Task<User> CreateUsers(User user);
+        Task<User> Authenticate(string email, string password);
+        Task<User> RegisterUser(User user, string password);
 
     }
 }

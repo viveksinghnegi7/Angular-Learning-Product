@@ -1,8 +1,7 @@
 ﻿using System;
 using Demo.Business.Contract;
 using Demo.Entities;
-using Demo.Repos.Contract;
-using Demo.Utilities;
+using Demo.Repos.Contract; 
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -11,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using Demo.Utilities;
 
 namespace Demo.Business.Concrete
 {
@@ -23,36 +23,26 @@ namespace Demo.Business.Concrete
             _userRepository = userRepository;
             _appSettings = appSettings.Value;
 
-        }
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<User> _users = new List<User>
+        } 
+        public async Task<User> Authenticate(string email, string password)
         {
-            new User { UserId = 1, FirstName = "Vivek", LastName = "Negi", Email = "viveksinghnegi7@gmail.com", Password = "12345" }
-        };
-        public User Authenticate(string email, string password)
-        {
-            var user = _users.SingleOrDefault(x => x.Email == email && x.Password == password);
+
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+                return null;
+
+            var user =await _userRepository.Authenticate(email,password);
 
             // return null if user not found
             if (user == null)
                 return null;
 
-            // authentication successful so generate jwt token
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.UserId.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
+            return user; 
+        }
 
-            return user;
+
+        public async Task<User> RegisterUser(User user, string password)
+        {
+            return await _userRepository.RegisterUser(user,password);
         }
         public async Task<IEnumerable<User>> GetAll()
         {
@@ -64,9 +54,9 @@ namespace Demo.Business.Concrete
             return await _userRepository.GetById(id);
         } 
 
-        public async Task<User> CreateUserRecord(User userDetails)
-        {
-            return await _userRepository.CreateUsers(userDetails);
-        } 
+        //public async Task<User> CreateUserRecord(User userDetails)
+        //{
+        //    return await _userRepository.CreateUsers(userDetails);
+        //} 
     }
 }
