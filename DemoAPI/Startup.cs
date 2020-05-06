@@ -4,8 +4,7 @@ using Demo.Business.Concrete;
 using Demo.Business.Contract;
 using Demo.Repos.Concrete;
 using Demo.Repos.Contract;
-using Demo.Repos.Models;
-using Demo.Utilities;
+using Demo.Repos.Models; 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using  AutoMapper;
+using Demo.Utilities;
 
 namespace Demo.API
 {
@@ -43,7 +44,10 @@ namespace Demo.API
                     options.SuppressMapClientErrors = true;
                     options.ClientErrorMapping[404].Link =
                         "https://httpstatuses.com/404";
-                });
+                }).AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
