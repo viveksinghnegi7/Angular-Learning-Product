@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FullComponent } from './layouts/full/full.component';
-import { LoginComponent } from './account/login.component';
+import { LoginComponent } from './account/login/login.component';
 import { AuthGuard } from "./helpers/auth.gaurd";
 
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);

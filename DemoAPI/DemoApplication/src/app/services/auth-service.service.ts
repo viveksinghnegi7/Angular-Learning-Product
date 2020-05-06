@@ -36,7 +36,14 @@ export class AuthServiceService {
         return user;
       }), retry(1), catchError(this.errorHandl));
   }
-
+  register(data): Observable<AuthenticateUser> {
+    return this.httpClient.post<AuthenticateUser>(environment.baseUrl + 'register', JSON.stringify(data), this.httpOptions)
+      .pipe(map(user => {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+        return user;
+      }), retry(1), catchError(this.errorHandl));
+  }
   logout() {
     // remove user from local storage and set current user to null
     localStorage.removeItem('currentUser');
