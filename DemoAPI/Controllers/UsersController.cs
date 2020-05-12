@@ -96,10 +96,10 @@ namespace Demo.API.Controllers
 
 
 
-        [HttpGet]
-        public IActionResult GetAll()
+        [HttpGet("users")] 
+        public async Task<IActionResult> GetAll()
         {
-            var users = _userManager.GetAll();
+            var users =await _userManager.GetAll();
             return Ok(users);
         }
 

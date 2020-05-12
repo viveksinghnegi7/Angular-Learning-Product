@@ -8,9 +8,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from "./login/login.component";
 import { AccountComponent } from './account.component';
+import { AlertComponent } from "../alert/alert.component";
 
 @NgModule({
-  declarations: [AccountComponent,LoginComponent, RegisterComponent],
+  declarations: [AccountComponent, LoginComponent, RegisterComponent,AlertComponent],
   imports: [
     CommonModule, DemoMaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule,
     AccountRoutingModule

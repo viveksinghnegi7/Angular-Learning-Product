@@ -17,6 +17,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { ErrorInterceptor } from "./helpers/error.interceptor";
+import { AlertComponent } from './alert/alert.component';
 
 
 
@@ -26,7 +27,7 @@ import { ErrorInterceptor } from "./helpers/error.interceptor";
     FullComponent,
     HeaderComponent,
     SidebarComponent,
-    SpinnerComponent
+    SpinnerComponent//, AlertComponent 
   ],
   imports: [
     BrowserModule,
@@ -40,8 +41,9 @@ import { ErrorInterceptor } from "./helpers/error.interceptor";
     ReactiveFormsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    //,
+    //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

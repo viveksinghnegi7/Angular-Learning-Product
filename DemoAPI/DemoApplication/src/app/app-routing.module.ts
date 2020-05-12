@@ -8,22 +8,23 @@ const accountModule = () => import('./account/account.module').then(x => x.Accou
 const routes: Routes = [
     {
     path: '', component: FullComponent,
-    //  children: [
-    //    {
-    //      path: '',
-    //      redirectTo: '',
-    //      pathMatch: 'full'
-    //    }//,
-    //    //{
-    //    //  path: '',
-    //    //  loadChildren:
-    //    //    () => import('./material-component/material.module').then(m => m.MaterialComponentsModule)
-    //    //},
-    //    //{
-    //    //  path: 'dashboard',
-    //    //  loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-    //    //}
-    //],
+      children: [
+        {
+          path: '',
+          redirectTo: '/users',
+          pathMatch: 'full'
+        }//,
+        //{
+        //  path: '',
+        //  loadChildren:
+        //    () => import('./material-component/material.module').then(m => m.MaterialComponentsModule)
+        //}
+        ,
+        {
+          path: 'users',
+          loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+        }
+    ],
      canActivate: [AuthGuard]
   },
     { path: 'account', loadChildren: accountModule },

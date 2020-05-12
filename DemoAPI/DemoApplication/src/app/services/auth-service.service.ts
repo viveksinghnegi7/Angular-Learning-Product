@@ -34,15 +34,10 @@ export class AuthServiceService {
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         return user;
-      }), retry(1), catchError(this.errorHandl));
+      }) );
   }
   register(data): Observable<AuthenticateUser> {
-    return this.httpClient.post<AuthenticateUser>(environment.baseUrl + 'register', JSON.stringify(data), this.httpOptions)
-      .pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
-      }), retry(1), catchError(this.errorHandl));
+    return this.httpClient.post<AuthenticateUser>(environment.baseUrl + 'register', JSON.stringify(data), this.httpOptions);
   }
   logout() {
     // remove user from local storage and set current user to null
@@ -50,19 +45,4 @@ export class AuthServiceService {
     this.currentUserSubject.next(null);
     this.router.navigate(['/account/login']);
   }
-  // Error handling
-  errorHandl(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(errorMessage);
-  }
-
-
 }
