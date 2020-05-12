@@ -52,11 +52,22 @@ namespace Demo.Business.Concrete
         public async Task<User> GetById(int id)
         {
             return await _userRepository.GetById(id);
-        } 
+        }
 
-        //public async Task<User> CreateUserRecord(User userDetails)
-        //{
-        //    return await _userRepository.CreateUsers(userDetails);
-        //} 
+        public async Task<User> CreateUser(User user)
+        {
+            return await _userRepository.CreateUser(user);
+        }
+
+        public async Task<User> UpdateUser(User user)
+        {
+            return await _userRepository.UpdateUser(user); 
+        }
+
+        public async Task<User> DeleteUser(int userId)
+        {
+            return await _userRepository.DeleteUser(userId);
+
+        } 
     }
 }

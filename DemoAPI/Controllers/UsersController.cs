@@ -17,7 +17,7 @@ namespace Demo.API.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("controller")]
+    [Route("api/[Controller]")]
     public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> _logger;
@@ -96,12 +96,35 @@ namespace Demo.API.Controllers
 
 
 
-        [HttpGet("users")] 
+        [HttpGet("list")] 
         public async Task<IActionResult> GetAll()
         {
             var users =await _userManager.GetAll();
             return Ok(users);
         }
 
+        [HttpPut("create")]
+        public async Task<IActionResult> CreateUser([FromBody] User user)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var entity = await _userManager.CreateUser(user);
+            return Ok(entity);
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateUser([FromBody] User user)
+        {
+            var entity = await _userManager.UpdateUser(user);
+            return Ok(entity);
+        }
+
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            var entity = await _userManager.DeleteUser(userId);
+            return Ok(entity);
+        }
     }
 }

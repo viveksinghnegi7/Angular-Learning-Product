@@ -12,6 +12,12 @@ namespace Demo.Repos.Contract
         Task<User> GetById(int id);
         Task<User> Authenticate(string email, string password);
         Task<User> RegisterUser(User user, string password);
+        Task<User> CreateUser(User user);
+        Task<User> UpdateUser(User user);
+
+        Task<User> DeleteUser(int userId);
+
+
 
     }
 }
