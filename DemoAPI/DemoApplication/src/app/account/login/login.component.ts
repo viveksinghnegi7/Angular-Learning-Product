@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthServiceService } from "../services/auth-service.service";
+import { AuthServiceService } from "../../services/auth-service.service";
 import { Router, ActivatedRoute } from '@angular/router';
+import { AlertService } from '../../services/alert.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,8 @@ export class LoginComponent implements OnInit {
   submitted = false;
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthServiceService) {
+    private authService: AuthServiceService,
+    private alertService:AlertService) {
 
     // redirect to home if already logged in
     if (this.authService.userValue) {
@@ -42,20 +45,26 @@ export class LoginComponent implements OnInit {
   get f() { return this.formGroup.controls; }
   loginProcess() {
     this.submitted = true;
+    // reset alerts on submit
+    this.alertService.clear();
     // stop here if form is invalid
     if (this.formGroup.invalid) {
       return;
     }
 
-    if (this.formGroup.valid) { 
-      this.authService.login(this.formGroup.value).subscribe(result => {
-        if (result != null) {
-          console.log(this.returnUrl);
-          this.router.navigate([this.returnUrl]); 
-        } else { 
-          console.log("Login Not Successful");
-        }
-      });
+    if (this.formGroup.valid) {
+      this.authService.login(this.formGroup.value).pipe(first()).subscribe(async data => {
+          this.router.navigate([this.returnUrl]);
+      },
+        error => { 
+          this.alertService.error("Login Failed");
+          //this.loading = false;
+        });
     }
+
+    //For setting delay
+     function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
+  } 
 }

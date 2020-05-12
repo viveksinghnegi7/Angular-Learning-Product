@@ -54,21 +54,27 @@ export class RegisterComponent implements OnInit {
     if (this.formGroup.invalid) {
       return;
     }
-
+    console.log("reg hit");
     //this.loading = true;
-    //this.authService.register(this.form.value)
-    //  .pipe(first())
-    //  .subscribe(
-    //    data => {
-    //     // this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-    //      this.router.navigate(['../login'], { relativeTo: this.route });
-    //    },
-    //    error => {
-    //      //this.alertService.error(error);
-    //     // this.loading = false;
-    //    });
+    this.authService.register(this.formGroup.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+         // this.alertService.success('Registration successful', { keepAfterRouteChange: true });
+          this.router.navigate(['../login'], { relativeTo: this.route });
+        },
+        error => {
+          console.log("reg error");
+
+          //this.alertService.error(error);
+         // this.loading = false;
+        });
   }
 
+
+  cancel() {
+    this.formGroup.reset();
+  }
 }
 
 

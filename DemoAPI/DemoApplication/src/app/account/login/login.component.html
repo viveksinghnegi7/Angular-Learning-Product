@@ -22,11 +22,14 @@
             <div *ngIf="f.password.errors.required">Password is required</div>
           </div>
         </mat-form-field>
-        <br> 
-        <div class="example-button-row">
-          <button mat-raised-button color="primary" type="submit">Login</button> 
-</div>
-      </form>
+        <br>
+        <div class="example-button-row" >
+          <button fxFill  fxLayoutAlign="center center" mat-raised-button color="primary"  type="submit">Login</button>
+        </div>
+      </form> <br/>
+      <div class="example-button-row" > 
+        <a fxFill  fxLayoutAlign="center center" mat-raised-button color="accent" routerLink="/account/register" routerLinkActive="active">Register</a>
+      </div>
     </mat-card-content> 
   </mat-card>
-</div>
+</div> 

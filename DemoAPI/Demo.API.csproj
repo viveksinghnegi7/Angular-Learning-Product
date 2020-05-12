@@ -31,6 +31,8 @@
     <None Remove="DemoApplication\src\app\helpers\auth.gaurd.ts" />
     <None Remove="DemoApplication\src\app\helpers\error.interceptor.ts" />
     <None Remove="DemoApplication\src\app\helpers\jwt.interceptor.ts" />
+    <None Remove="DemoApplication\src\app\models\Alert.ts" />
+    <None Remove="DemoApplication\src\app\models\Users.ts" />
     <None Remove="DemoApplication\src\app\services\AuthenticateUser.ts" />
   </ItemGroup>
 
@@ -46,7 +48,9 @@
     <TypeScriptCompile Include="DemoApplication\src\app\helpers\auth.gaurd.ts" />
     <TypeScriptCompile Include="DemoApplication\src\app\helpers\error.interceptor.ts" />
     <TypeScriptCompile Include="DemoApplication\src\app\helpers\jwt.interceptor.ts" />
+    <TypeScriptCompile Include="DemoApplication\src\app\models\Alert.ts" />
     <TypeScriptCompile Include="DemoApplication\src\app\models\AuthenticateUser.ts" />
+    <TypeScriptCompile Include="DemoApplication\src\app\models\Users.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
