@@ -12,11 +12,15 @@ namespace Demo.Repos.Concrete
     public class UserRepository : GenericRepository<User, DemoContext>, IUserRepository
     {
         readonly  DemoContext _demoContext;
+
+        #region Constructor
         public UserRepository(DemoContext demoContext) : base(demoContext)
         {
             _demoContext = demoContext;
         }
+        #endregion
 
+        #region Public Methods
         public async Task<User> Authenticate(string email, string password)
         {
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
@@ -55,19 +59,35 @@ namespace Demo.Repos.Concrete
             _demoContext.SaveChanges();
 
             //return user;
-            return await base.Add(user); 
+            return await base.Add(user);
         }
 
 
         async Task<IEnumerable<User>> IUserRepository.GetAllUsers()
         {
-            return await base.GetAll(); 
+            return await base.GetAll();
         }
 
         async Task<User> IUserRepository.GetById(int id)
         {
-            return await base.Get(id); 
+            return await base.Get(id);
         }
+        public async Task<User> CreateUser(User user)
+        {
+            return await base.Add(user);
+        }
+
+        public async Task<User> UpdateUser(User user)
+        {
+            return await base.Update(user); 
+        }
+
+        public async Task<User> DeleteUser(int userId)
+        {
+            return await base.Delete(userId);
+
+        }
+        #endregion
 
 
         #region Private Methods
@@ -102,9 +122,7 @@ namespace Demo.Repos.Concrete
             }
 
             return true;
-        }
-
-
+        } 
         #endregion
     }
 }

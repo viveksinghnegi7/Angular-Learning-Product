@@ -29,7 +29,7 @@ export class AuthServiceService {
   }
 
   login(data): Observable<AuthenticateUser> {
-    return this.httpClient.post<AuthenticateUser>(environment.baseUrl + 'authenticate', JSON.stringify(data), this.httpOptions)
+    return this.httpClient.post<AuthenticateUser>(environment.baseUrl + 'users/authenticate', JSON.stringify(data), this.httpOptions)
       .pipe(map(user => { 
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
@@ -37,7 +37,7 @@ export class AuthServiceService {
       }) );
   }
   register(data): Observable<AuthenticateUser> {
-    return this.httpClient.post<AuthenticateUser>(environment.baseUrl + 'register', JSON.stringify(data), this.httpOptions);
+    return this.httpClient.post<AuthenticateUser>(environment.baseUrl + 'users/register', JSON.stringify(data), this.httpOptions);
   }
   logout() {
     // remove user from local storage and set current user to null

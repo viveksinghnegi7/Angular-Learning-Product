@@ -22,8 +22,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="DemoApplication\src\app\shared\services\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="DemoApplication\src\app\shared\services\**" />
+    <EmbeddedResource Remove="DemoApplication\src\app\shared\services\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="DemoApplication\src\app\shared\services\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -34,6 +38,7 @@
     <None Remove="DemoApplication\src\app\models\Alert.ts" />
     <None Remove="DemoApplication\src\app\models\Users.ts" />
     <None Remove="DemoApplication\src\app\services\AuthenticateUser.ts" />
+    <None Remove="DemoApplication\src\app\shared\services\user.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
