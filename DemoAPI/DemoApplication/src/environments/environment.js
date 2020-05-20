@@ -5,7 +5,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.environment = {
     production: false,
-    baseUrl: 'https://localhost:44355/controller/'
+    baseUrl: 'https://localhost:44355/api/'
 };
 /*
  * For easier debugging in development mode, you can import the following file
