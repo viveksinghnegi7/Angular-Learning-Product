@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
+import { map, catchError, retry } from "rxjs/operators";
+
 import { environment } from "../../environments/environment";
 import { Users } from "../models/Users"; 
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import * as _ from 'lodash';
-import { map } from 'rxjs/operators'
 @Injectable({
   providedIn: 'root'
 })
@@ -53,12 +54,23 @@ export class UserService {
   getAllUsers(): Observable<Users[]> {
     return this.httpClient.get<Users[]>(environment.baseUrl + 'users/list', this.httpOptions);
   }
-
-  deleteUser(userId: number) {
-    console.log(userId);
-    return this.httpClient.delete<Users>(environment.baseUrl + 'users/delete', this.httpOptions).map(res => res.json()
-      .catch((error: any) =>
-        Observable.throw(error.error || 'Server error')
-      );
+   
+  // DELETE
+  deleteUser(id: any){
+    console.log("in");
+    return this.httpClient.delete<any>(`${environment.baseUrl}users/delete/${id}`, this.httpOptions).subscribe()
+  }
+  // Error handling
+  errorHandl(error) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // Get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
   }
 }

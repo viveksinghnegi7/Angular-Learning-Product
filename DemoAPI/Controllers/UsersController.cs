@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -94,7 +95,13 @@ namespace Demo.API.Controllers
             }
         }
 
-
+        // GET api/users
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult<IEnumerable<string>> Get()
+        {
+            return new string[] { "API Running", "Success" };
+        }
 
         [HttpGet("list")] 
         public async Task<IActionResult> GetAll()
@@ -120,7 +127,8 @@ namespace Demo.API.Controllers
             return Ok(entity);
         }
 
-        [HttpDelete("delete")]
+        
+        [HttpDelete("delete/{userId}")]
         public async Task<IActionResult> DeleteUser(int userId)
         {
             var entity = await _userManager.DeleteUser(userId);
