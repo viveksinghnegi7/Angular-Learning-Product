@@ -40,7 +40,7 @@ namespace Demo.API.Controllers
             try
             {
                 _logger.LogInformation("Authenticate Called");
-                var user =await _userManager.Authenticate(model.Email, model.Password);
+                var user = await _userManager.Authenticate(model.Email, model.Password);
 
                 if (user == null)
                     return BadRequest(new { message = "Username or password is incorrect" });
@@ -71,6 +71,7 @@ namespace Demo.API.Controllers
             }
             catch (AppException exception)
             {
+                _logger.LogError(exception.Message);
                 return BadRequest(new { message = exception.Message });
             }
 
@@ -90,6 +91,8 @@ namespace Demo.API.Controllers
             }
             catch (AppException ex)
             {
+                _logger.LogError(ex.Message);
+
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
             }
@@ -100,34 +103,44 @@ namespace Demo.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "API Running", "Success" };
+            return new string[] { "API status Running", "Success" };
         }
 
-        [HttpGet("list")] 
+        [HttpGet("list")]
         public async Task<IActionResult> GetAll()
         {
-            var users =await _userManager.GetAll();
-            return Ok(users);
+            try
+            {
+                var users = await _userManager.GetAll();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            return Ok();
         }
 
-        [HttpPut("create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {
+            // map model to entity
+            var newUser = _mapper.Map<User>(user);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var entity = await _userManager.CreateUser(user);
+            var entity = await _userManager.CreateUser(newUser);
             return Ok(entity);
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateUser([FromBody] User user)
         {
             var entity = await _userManager.UpdateUser(user);
             return Ok(entity);
         }
 
-        
+
         [HttpDelete("delete/{userId}")]
         public async Task<IActionResult> DeleteUser(int userId)
         {
