@@ -27,16 +27,16 @@ export class UserComponent implements OnInit {
   }
 
   onSubmit() {
-    //if (this.service.form.valid) {
-    //  if (!this.service.form.get('$key').value)
-    //    this.service.insertEmployee(this.service.form.value);
-    //  else
-    //    this.service.updateEmployee(this.service.form.value);
-    //  this.service.form.reset();
-    //  this.service.initializeFormGroup();
-    //  this.notificationService.success(':: Submitted successfully');
-    //  this.onClose();
-    //}
+    if (this.service.form.valid) {
+      if (!this.service.form.get('userId').value)
+        this.service.insertUser(this.service.form.value).subscribe();
+      else
+        this.service.updateUser(this.service.form.value).subscribe();
+      this.service.form.reset();
+      this.service.initializeFormGroup();
+      //this.notificationService.success(':: Submitted successfully');
+      this.onClose();
+    }
   }
 
   onClose() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, throwError } from "rxjs";
-import { map, catchError, retry } from "rxjs/operators";
+import { Observable, throwError ,of} from "rxjs";
+import { map, catchError, tap,retry } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 import { Users } from "../models/Users"; 
@@ -36,16 +36,10 @@ export class UserService {
 
   initializeFormGroup() {
     this.form.setValue({
-      userId: '',
+      userId: null,
       email: '',
       firstName: '',
-      lastName: '', 
-      //mobile: '',
-      //city: '',
-      //gender: '1',
-      //department: 0,
-      //hireDate: '',
-      //isPermanent: false
+      lastName: '' 
     });
   }
   populateForm(user) {
@@ -54,23 +48,58 @@ export class UserService {
   getAllUsers(): Observable<Users[]> {
     return this.httpClient.get<Users[]>(environment.baseUrl + 'users/list', this.httpOptions);
   }
+
+
+  
+  /** POST: add a new user to the server */
+  insertUser(user: any): Observable<any> {
+    var url = `${environment.baseUrl}users/create`;
+    console.log(url + JSON.stringify(user));
+    return this.httpClient.post<any>(url, JSON.stringify(user), this.httpOptions).pipe(
+      tap((newUser: any) => this.log(`added user w/ id=${newUser.userId}`)),
+      catchError(this.handleError<any>('addUser'))
+    );
+  }
+
+  /** PUT: update the user on the server */
+  updateUser(user: Users): Observable<any> {
+    console.log("updating...");
+    var url = `${environment.baseUrl}users/update`;
+    console.log(url);
+    console.log(JSON.stringify(user));
+    return this.httpClient.put(url, JSON.stringify(user), this.httpOptions).pipe(
+      tap(_ => this.log(`updated user id=${user.userId}`)),
+      catchError(this.handleError<any>('updateUser'))
+    );
+  }
    
   // DELETE
   deleteUser(id: any){
     console.log("in");
     return this.httpClient.delete<any>(`${environment.baseUrl}users/delete/${id}`, this.httpOptions).subscribe()
   }
-  // Error handling
-  errorHandl(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(errorMessage);
+
+  /**
+ * Handle Http operation that failed.
+ * Let the app continue.
+ * @param operation - name of the operation that failed
+ * @param result - optional value to return as the observable result
+ */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+  /** Log a HeroService message with the MessageService */
+  private log(message: string) {
+    //this.messageService.add(`HeroService: ${message}`);
   }
 }
