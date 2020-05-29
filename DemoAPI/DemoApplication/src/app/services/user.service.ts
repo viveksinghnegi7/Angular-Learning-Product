@@ -21,7 +21,7 @@ export class UserService {
     })
   }
   form: FormGroup = new FormGroup({
-    userId: new FormControl(null),
+    userId: new FormControl(0),
     email: new FormControl('', Validators.email), 
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -32,11 +32,10 @@ export class UserService {
     //department: new FormControl(0),
     //hireDate: new FormControl(''),
     //isPermanent: new FormControl(false)
-  });
-
+  }); 
   initializeFormGroup() {
     this.form.setValue({
-      userId: null,
+      userId: 0,
       email: '',
       firstName: '',
       lastName: '' 
@@ -46,13 +45,15 @@ export class UserService {
     this.form.setValue(_.omit(user, 'password', 'passwordHash','passwordSalt'));
   }
   getAllUsers(): Observable<Users[]> {
-    return this.httpClient.get<Users[]>(environment.baseUrl + 'users/list', this.httpOptions);
+    return this.httpClient.get<Users[]>(environment.baseUrl + 'users/list', this.httpOptions); 
   }
 
-
+  refresh() {
+    return this.httpClient.get<Users[]>(environment.baseUrl + 'users/list', this.httpOptions); 
+  }
   
   /** POST: add a new user to the server */
-  insertUser(user: any): Observable<any> {
+  insertUser(user: Users): Observable<any> {
     var url = `${environment.baseUrl}users/create`;
     console.log(url + JSON.stringify(user));
     return this.httpClient.post<any>(url, JSON.stringify(user), this.httpOptions).pipe(
@@ -76,9 +77,10 @@ export class UserService {
   // DELETE
   deleteUser(id: any){
     console.log("in");
-    return this.httpClient.delete<any>(`${environment.baseUrl}users/delete/${id}`, this.httpOptions).subscribe()
+    return this.httpClient.delete<any>(`${environment.baseUrl}users/delete/${id}`, this.httpOptions);
   }
 
+   
   /**
  * Handle Http operation that failed.
  * Let the app continue.

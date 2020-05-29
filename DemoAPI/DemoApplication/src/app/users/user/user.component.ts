@@ -17,7 +17,7 @@ export class UserComponent implements OnInit {
     public dialogRef: MatDialogRef<UserComponent>) { }
 
   ngOnInit(): void {
-    this.service.getAllUsers(); 
+    //this.service.getAllUsers(); 
   } 
 
   onClear() {
@@ -27,17 +27,41 @@ export class UserComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.service.form.valid) {
-      if (!this.service.form.get('userId').value)
-        this.service.insertUser(this.service.form.value).subscribe();
-      else
-        this.service.updateUser(this.service.form.value).subscribe();
-      this.service.form.reset();
-      this.service.initializeFormGroup();
-      //this.notificationService.success(':: Submitted successfully');
-      this.onClose();
-    }
+    if (this.service.form.get('userId').value == 0)
+      this.insertRecord(this.service.form.value);
+    else
+      this.updateRecord(this.service.form.value);
+    this.service.form.reset();
+    this.service.initializeFormGroup();
+   // this.notificationService.success(':: Submitted successfully'); 
+     
   }
+   
+  insertRecord(form: any) {
+    this.service.insertUser(form).subscribe(
+      res => {
+        debugger; 
+        //this.toastr.success('Submitted successfully', 'Payment Detail Register');
+        this.service.refresh().subscribe();
+      },
+      err => {
+        debugger;
+        console.log(err);
+      }
+    )
+  }
+  updateRecord(form: any) {
+    this.service.updateUser(form).subscribe(
+      res => { 
+        //this.toastr.info('Submitted successfully', 'Payment Detail Register'); 
+        this.service.refresh().subscribe();
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+ 
 
   onClose() {
     this.service.form.reset();

@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Server=DEL1-LHP-N02063;Database=Demo;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -f
