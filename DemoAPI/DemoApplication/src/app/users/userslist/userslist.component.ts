@@ -14,12 +14,21 @@ import { Observable, throwError } from "rxjs";
   styleUrls: ['./userslist.component.css']
 })
 export class UserslistComponent implements OnInit {
-  constructor(private userService: UserService, private dialog: MatDialog) { }
-  displayedColumns: string[] = ['userId', 'email', 'firstName', 'lastName', 'actions'];
-  dataSource: any;
+  constructor(private userService: UserService, private dialog: MatDialog) {
+    dialog.afterAllClosed
+      .subscribe(() => {
+        // update a variable or call a function when the dialog closes
+        console.log("Ouch");
+        this.populateUserData();
+      }
+      );
+  }
+  displayedColumns: string[] = ['userId', 'email', 'firstName', 'lastName', 'actions']; 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   searchKey: string;
+  dataSource: any;
+
   ngOnInit(): void {
     this.populateUserData();
   }
@@ -29,7 +38,7 @@ export class UserslistComponent implements OnInit {
     this.applyFilter();
   }
 
-  applyFilter() { 
+  applyFilter() {
     this.dataSource.filter = this.searchKey.trim().toLowerCase();
   }
 
@@ -54,19 +63,39 @@ export class UserslistComponent implements OnInit {
 
   onDelete(userId:any):void {
     if (confirm('Are you sure to delete this record ?')) {
-      this.userService.deleteUser(userId);
+      this.userService.deleteUser(userId).subscribe(res => {
+        //debugger;
+        this.refresh();
+        //this.toastr.warning('Deleted successfully', 'Payment Detail Register');
+      },
+        err => {
+          //debugger;
+          console.log(err);
+        });
       console.log("out");
       //this.notificationService.warn('! Deleted successfully');
-      this.populateUserData(); 
+      this.refresh(); 
     }
   }
 
+  refresh() { 
+    this.userService.getAllUsers().toPromise()
+      .then(res => this.dataSource = res as Users[]);
+  }
 
   populateUserData() { 
     this.userService.getAllUsers()
       .subscribe(response => {
-        console.log(response);
-        this.dataSource = response; 
+        console.log(response + "helllllll");
+        //this.dataSource = response; 
+        this.dataSource = new MatTableDataSource(response);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.filterPredicate = (data, filter) => {
+          return this.displayedColumns.some(ele => {
+            return ele != 'actions' && data[ele].toLowerCase().indexOf(filter) != -1;
+          });
+        };
       }); 
   }
 }
