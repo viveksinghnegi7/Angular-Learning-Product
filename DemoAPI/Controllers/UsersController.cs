@@ -60,6 +60,7 @@ namespace Demo.API.Controllers
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
                 // return basic user info and authentication token
+                _logger.LogInformation("Authenticate Completed");
                 return Ok(new
                 {
                     Id = user.UserId,
@@ -72,6 +73,7 @@ namespace Demo.API.Controllers
             catch (AppException exception)
             {
                 _logger.LogError(exception.Message);
+                _logger.LogError(exception.InnerException.Message , exception);                
                 return BadRequest(new { message = exception.Message });
             }
 

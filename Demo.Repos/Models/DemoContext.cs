@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Demo.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -23,7 +24,7 @@ namespace Demo.Repos.Models
             if (!optionsBuilder.IsConfigured)
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DEL1-LHP-N02063;Database=Demo;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             }
         }
 

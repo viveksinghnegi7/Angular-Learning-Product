@@ -1,15 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
-    <IsPackable>false</IsPackable>
-    <SpaRoot>DemoApplication\</SpaRoot>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-
-    <!-- Set this to true if you enable server-side prerendering -->
-    <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <TargetFramework>netcoreapp3.1</TargetFramework>   
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,72 +11,16 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Compile Remove="DemoApplication\src\app\shared\services\**" />
-    <Content Remove="$(SpaRoot)**" />
-    <Content Remove="DemoApplication\src\app\shared\services\**" />
-    <EmbeddedResource Remove="DemoApplication\src\app\shared\services\**" />
-    <None Remove="$(SpaRoot)**" />
-    <None Remove="DemoApplication\src\app\shared\services\**" />
-    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="DemoApplication\src\app\helpers\auth.gaurd.ts" />
-    <None Remove="DemoApplication\src\app\helpers\error.interceptor.ts" />
-    <None Remove="DemoApplication\src\app\helpers\jwt.interceptor.ts" />
-    <None Remove="DemoApplication\src\app\models\Alert.ts" />
-    <None Remove="DemoApplication\src\app\models\Users.ts" />
-    <None Remove="DemoApplication\src\app\services\AuthenticateUser.ts" />
-    <None Remove="DemoApplication\src\app\shared\services\user.service.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DemoApplication\src\app\layouts\" />
-  </ItemGroup>
-
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+  </ItemGroup>  
   <ItemGroup>
     <ProjectReference Include="..\Demo.Business\Demo.Business.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="DemoApplication\src\app\helpers\auth.gaurd.ts" />
-    <TypeScriptCompile Include="DemoApplication\src\app\helpers\error.interceptor.ts" />
-    <TypeScriptCompile Include="DemoApplication\src\app\helpers\jwt.interceptor.ts" />
-    <TypeScriptCompile Include="DemoApplication\src\app\models\Alert.ts" />
-    <TypeScriptCompile Include="DemoApplication\src\app\models\AuthenticateUser.ts" />
-    <TypeScriptCompile Include="DemoApplication\src\app\models\Users.ts" />
-  </ItemGroup>
-
-  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
-    <!-- Ensure Node.js is installed -->
-    <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
-    </Exec>
-    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-  </Target>
-
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
-
-    <!-- Include the newly-built files in the publish output -->
-    <ItemGroup>
-      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
-      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>%(DistFiles.Identity)</RelativePath>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </ResolvedFileToPublish>
-    </ItemGroup>
-  </Target>
+  </ItemGroup>   
 
 </Project>
