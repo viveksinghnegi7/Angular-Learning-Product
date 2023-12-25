@@ -26,19 +26,14 @@ namespace Demo.Business.Concrete
         } 
         public async Task<User> Authenticate(string email, string password)
         {
-
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
                 return null;
-
             var user =await _userRepository.Authenticate(email,password);
-
             // return null if user not found
             if (user == null)
                 return null;
-
             return user; 
         }
-
 
         public async Task<User> RegisterUser(User user, string password)
         {
@@ -67,7 +62,6 @@ namespace Demo.Business.Concrete
         public async Task<User> DeleteUser(int userId)
         {
             return await _userRepository.DeleteUser(userId);
-
         } 
     }
 }
